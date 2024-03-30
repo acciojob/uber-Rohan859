@@ -11,6 +11,8 @@ public class Customer
     private Integer customerId;
     private String name;
 
+    private String mobile;
+
     public Customer() {
     }
 
@@ -33,5 +35,13 @@ public class Customer
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 }
