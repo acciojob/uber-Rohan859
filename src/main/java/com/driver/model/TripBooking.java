@@ -14,6 +14,8 @@ public class TripBooking
     private Integer distanceInKm;
 
     private TripStatus tripStatus;
+
+    private Integer bill;
     @OneToOne
     Driver driver;
 
@@ -86,5 +88,13 @@ public class TripBooking
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Integer getBill() {
+        return bill;
+    }
+
+    public void setBill(Integer bill) {
+        this.bill = bill;
     }
 }
