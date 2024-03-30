@@ -13,6 +13,7 @@ import com.driver.repository.TripBookingRepository;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -49,49 +50,78 @@ public class CustomerServiceImpl implements CustomerService {
 		//Book the driver with lowest driverId who is free (cab available variable is Boolean.TRUE). If no driver is available, throw "No cab available!" exception
 		//Avoid using SQL query
 
-		//1. get all drivers
-		List<Driver>driverList=driverRepository2.getAllDriverList();
+//		//1. get all drivers
+//		List<Driver>driverList=driverRepository2.getAllDriverList();
+//
+//		//2. find the lowest driverId who is free
+//		//so sort the driverList in ascending order based on their ids
+//		Collections.sort(driverList,(Driver a,Driver b)->{
+//			return Integer.compare(a.getDriverId(), b.getDriverId());
+//		});
+//
+//		//now check if any driver cab is free or not
+//		boolean flag=true;
+//
+//		Driver driver=null;
+//
+//		for(Driver driver1:driverList)
+//		{
+//			if(driver1.getCab().getAvailable()==Boolean.TRUE)
+//			{
+//				driver=driver1;
+//				flag=false;
+//				break;
+//			}
+//		}
+//
+//		//if flag is true then no driver cab is available
+//		if(flag)
+//		{
+//			throw new Exception("No cab available!");
+//		}
+//
+//		//get the customer from the db with id
+//		Customer customer=customerRepository2.findById(customerId).get();
+//
+//		//make tripBooking
+//		TripBooking tripBooking=new TripBooking(fromLocation,toLocation,distanceInKm,TripStatus.CONFIRMED,driver,customer);
+//
+//		//change the driver cab is not available
+//		driver.getCab().setAvailable(Boolean.FALSE);
+//
+//		//save all these into dbs
+//		tripBooking=tripBookingRepository2.save(tripBooking);
+//		driver=driverRepository2.save(driver);
+//		customer=customerRepository2.save(customer);
+//
+//		return tripBooking;
 
-		//2. find the lowest driverId who is free
-		//so sort the driverList in ascending order based on their ids
-		Collections.sort(driverList,(Driver a,Driver b)->{
-			return Integer.compare(a.getDriverId(), b.getDriverId());
-		});
+		List<Driver> driverList = driverRepository2.getAllDriverList();
 
-		//now check if any driver cab is free or not
-		boolean flag=true;
+		// Find the first available driver
+		Optional<Driver> availableDriver = driverList.stream()
+				.filter(driver -> driver.getCab().getAvailable())
+				.findFirst();
 
-		Driver driver=null;
-
-		for(Driver driver1:driverList)
-		{
-			if(driver1.getCab().getAvailable()==Boolean.TRUE)
-			{
-				driver=driver1;
-				flag=false;
-				break;
-			}
-		}
-
-		//if flag is true then no driver cab is available
-		if(flag)
-		{
+		// If no available driver found, throw exception
+		if (availableDriver.isEmpty()) {
 			throw new Exception("No cab available!");
 		}
 
-		//get the customer from the db with id
-		Customer customer=customerRepository2.findById(customerId).get();
+		Driver driver = availableDriver.get();
 
-		//make tripBooking
-		TripBooking tripBooking=new TripBooking(fromLocation,toLocation,distanceInKm,TripStatus.CONFIRMED,driver,customer);
+		// Get the customer from the database
+		Customer customer = customerRepository2.findById(customerId).orElseThrow(() -> new Exception("Customer not found"));
 
-		//change the driver cab is not available
+		// Create trip booking
+		TripBooking tripBooking = new TripBooking(fromLocation, toLocation, distanceInKm, TripStatus.CONFIRMED, driver, customer);
+
+		// Update driver's cab availability
 		driver.getCab().setAvailable(Boolean.FALSE);
 
-		//save all these into dbs
-		tripBooking=tripBookingRepository2.save(tripBooking);
-		driver=driverRepository2.save(driver);
-		customer=customerRepository2.save(customer);
+		// Save trip booking and driver details
+		tripBooking = tripBookingRepository2.save(tripBooking);
+		driver = driverRepository2.save(driver);
 
 		return tripBooking;
 	}
