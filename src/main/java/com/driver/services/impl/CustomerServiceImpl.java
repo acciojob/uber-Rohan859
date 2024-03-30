@@ -13,7 +13,6 @@ import com.driver.repository.TripBookingRepository;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -125,52 +124,38 @@ public class CustomerServiceImpl implements CustomerService {
 	public void completeTrip(Integer tripId)
 	{
 		//Complete the trip having given trip Id and update TripBooking attributes accordingly
-//		TripBooking tripBooking=tripBookingRepository2.findById(tripId).get();
-//		tripBooking.setFromLocation(null);
-//		tripBooking.setToLocation(null);
-//		tripBooking.setDistanceInKm(null);
-//		tripBooking.setStatus(TripStatus.COMPLETED);
-//
-//		Driver driver=tripBooking.getDriver();
-//		Cab cab=tripBooking.getDriver().getCab();
-//
-//		cab.setAvailable(Boolean.TRUE);
-//		cab.setPerKmRate(10);//default
-//
-//		tripBooking.setCustomer(null);
-//		tripBooking.setDriver(null);
-//
-//
-//		cab=cabRepository.save(cab);
-//		driver=driverRepository2.save(driver);
-//		tripBooking=tripBookingRepository2.save(tripBooking);
+		TripBooking tripBooking=tripBookingRepository2.findById(tripId).get();
 
-		Optional<TripBooking> optionalTripBooking = tripBookingRepository2.findById(tripId);
-		if (optionalTripBooking.isPresent()) {
-			TripBooking tripBooking = optionalTripBooking.get();
-			tripBooking.setFromLocation(null);
-			tripBooking.setToLocation(null);
-			tripBooking.setDistanceInKm(null);
-			tripBooking.setStatus(TripStatus.COMPLETED);
-
-			Driver driver = tripBooking.getDriver();
-			if (driver != null) {
-				Cab cab = driver.getCab();
-				if (cab != null) {
-					cab.setAvailable(Boolean.TRUE);
-					cab.setPerKmRate(10); //default
-					cab = cabRepository.save(cab);
-				}
-				driver = driverRepository2.save(driver);
-			}
-			tripBooking.setCustomer(null);
-			tripBooking.setDriver(null);
-			tripBooking = tripBookingRepository2.save(tripBooking);
-		} else {
-			// Handle the case where the trip with the given ID is not found
-			// You can log an error, throw an exception, or handle it according to your application's requirements
-			System.out.println("Trip with ID " + tripId + " not found.");
+		if(tripBooking==null)
+		{
+			return;
 		}
+		
+		tripBooking.setFromLocation(null);
+		tripBooking.setToLocation(null);
+		tripBooking.setDistanceInKm(null);
+		tripBooking.setStatus(TripStatus.COMPLETED);
+
+		Driver driver=tripBooking.getDriver();
+		if(driver!=null)
+		{
+			Cab cab=tripBooking.getDriver().getCab();
+			cab.setAvailable(Boolean.TRUE);
+			cab.setPerKmRate(10);//default
+			cab=cabRepository.save(cab);
+			driver=driverRepository2.save(driver);
+		}
+
+
+
+
+		tripBooking.setCustomer(null);
+		tripBooking.setDriver(null);
+
+
+
+
+		tripBooking=tripBookingRepository2.save(tripBooking);
 	}
 
 }
