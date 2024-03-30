@@ -32,11 +32,11 @@ public class Cab
         this.id = id;
     }
 
-    public Boolean getCabUnavlbl() {
+    public Boolean getAvailable() {
         return cabUnavlbl;
     }
 
-    public void setCabUnavlbl(Boolean cabUnavlbl) {
+    public void setAvailable(Boolean cabUnavlbl) {
         this.cabUnavlbl = cabUnavlbl;
     }
 
