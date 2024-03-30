@@ -105,7 +105,7 @@ public class CustomerServiceImpl implements CustomerService {
 		tripBooking.setToLocation(null);
 		tripBooking.setDistanceInKm(null);
 
-		tripBooking.setTripStatus(TripStatus.CANCELED);
+		tripBooking.setStatus(TripStatus.CANCELED);
 
 		Driver driver=tripBooking.getDriver();
 		Cab cab=driver.getCab();
@@ -128,7 +128,7 @@ public class CustomerServiceImpl implements CustomerService {
 		tripBooking.setFromLocation(null);
 		tripBooking.setToLocation(null);
 		tripBooking.setDistanceInKm(null);
-		tripBooking.setTripStatus(TripStatus.COMPLETED);
+		tripBooking.setStatus(TripStatus.COMPLETED);
 
 		Driver driver=tripBooking.getDriver();
 		Cab cab=tripBooking.getDriver().getCab();
