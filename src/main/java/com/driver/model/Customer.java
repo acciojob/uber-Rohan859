@@ -8,25 +8,30 @@ public class Customer
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String username;
+    private Integer customerId;
+    private String name;
 
     public Customer() {
     }
 
-    public Integer getId() {
-        return id;
+    public Customer(Integer customerId, String name) {
+        this.customerId = customerId;
+        this.name = name;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Integer getCustomerId() {
+        return customerId;
     }
 
-    public String getUsername() {
-        return username;
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
