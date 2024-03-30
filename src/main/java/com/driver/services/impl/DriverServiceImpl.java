@@ -58,6 +58,6 @@ public class DriverServiceImpl implements DriverService {
 	{
 		//Set the status of respective car to unavailable
 		Cab cab=driverRepository3.findById(driverId).get().getCab();
-		cab.setAvailable(Boolean.FALSE);
+		cab.setCabUnavlbl(Boolean.FALSE);
 	}
 }

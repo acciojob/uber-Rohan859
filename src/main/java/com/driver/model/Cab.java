@@ -8,40 +8,51 @@ public class Cab
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer cabId;
-    private Boolean isAvailable;
-    private Integer ratePerKm;
+    private Integer id;
+    private Boolean cabUnavlbl;
+    private Integer perKmRate;
 
+    @OneToOne(mappedBy = "cab",cascade = CascadeType.ALL)
+    Driver driver;
 
-    public Cab(Boolean isAvailable, Integer ratePerKm) {
-        this.isAvailable = isAvailable;
-        this.ratePerKm = ratePerKm;
-    }
 
     public Cab() {
     }
 
-    public Integer getCabId() {
-        return cabId;
+    public Cab(Boolean cabUnavlbl, Integer perKmRate) {
+        this.cabUnavlbl = cabUnavlbl;
+        this.perKmRate = perKmRate;
     }
 
-    public void setCabId(Integer cabId) {
-        this.cabId = cabId;
+    public Integer getId() {
+        return id;
     }
 
-    public Boolean getAvailable() {
-        return isAvailable;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setAvailable(Boolean available) {
-        isAvailable = available;
+    public Boolean getCabUnavlbl() {
+        return cabUnavlbl;
     }
 
-    public Integer getRatePerKm() {
-        return ratePerKm;
+    public void setCabUnavlbl(Boolean cabUnavlbl) {
+        this.cabUnavlbl = cabUnavlbl;
     }
 
-    public void setRatePerKm(Integer ratePerKm) {
-        this.ratePerKm = ratePerKm;
+    public Integer getPerKmRate() {
+        return perKmRate;
+    }
+
+    public void setPerKmRate(Integer perKmRate) {
+        this.perKmRate = perKmRate;
+    }
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
     }
 }

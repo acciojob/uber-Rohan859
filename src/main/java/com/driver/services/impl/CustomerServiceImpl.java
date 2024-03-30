@@ -65,7 +65,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 		for(Driver driver1:driverList)
 		{
-			if(driver1.getCab().getAvailable()==Boolean.TRUE)
+			if(driver1.getCab().getCabUnavlbl()==Boolean.TRUE)
 			{
 				driver=driver1;
 				flag=false;
@@ -86,7 +86,7 @@ public class CustomerServiceImpl implements CustomerService {
 		TripBooking tripBooking=new TripBooking(fromLocation,toLocation,distanceInKm,TripStatus.CONFIRMED,driver,customer);
 
 		//change the driver cab is not available
-		driver.getCab().setAvailable(Boolean.FALSE);
+		driver.getCab().setCabUnavlbl(Boolean.FALSE);
 
 		//save all these into dbs
 		tripBooking=tripBookingRepository2.save(tripBooking);
@@ -109,8 +109,8 @@ public class CustomerServiceImpl implements CustomerService {
 
 		Driver driver=tripBooking.getDriver();
 		Cab cab=driver.getCab();
-		cab.setRatePerKm(10);
-		cab.setAvailable(Boolean.TRUE);
+		cab.setPerKmRate(10);
+		cab.setCabUnavlbl(Boolean.TRUE);
 
 		tripBooking.setDriver(null);
 		tripBooking.setCustomer(null);
@@ -133,8 +133,8 @@ public class CustomerServiceImpl implements CustomerService {
 		Driver driver=tripBooking.getDriver();
 		Cab cab=tripBooking.getDriver().getCab();
 
-		cab.setAvailable(Boolean.TRUE);
-		cab.setRatePerKm(10);//default
+		cab.setCabUnavlbl(Boolean.TRUE);
+		cab.setPerKmRate(10);//default
 
 		tripBooking.setCustomer(null);
 		tripBooking.setDriver(null);
