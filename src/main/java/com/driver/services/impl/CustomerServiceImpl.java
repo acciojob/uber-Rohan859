@@ -50,78 +50,49 @@ public class CustomerServiceImpl implements CustomerService {
 		//Book the driver with lowest driverId who is free (cab available variable is Boolean.TRUE). If no driver is available, throw "No cab available!" exception
 		//Avoid using SQL query
 
-//		//1. get all drivers
-//		List<Driver>driverList=driverRepository2.getAllDriverList();
-//
-//		//2. find the lowest driverId who is free
-//		//so sort the driverList in ascending order based on their ids
-//		Collections.sort(driverList,(Driver a,Driver b)->{
-//			return Integer.compare(a.getDriverId(), b.getDriverId());
-//		});
-//
-//		//now check if any driver cab is free or not
-//		boolean flag=true;
-//
-//		Driver driver=null;
-//
-//		for(Driver driver1:driverList)
-//		{
-//			if(driver1.getCab().getAvailable()==Boolean.TRUE)
-//			{
-//				driver=driver1;
-//				flag=false;
-//				break;
-//			}
-//		}
-//
-//		//if flag is true then no driver cab is available
-//		if(flag)
-//		{
-//			throw new Exception("No cab available!");
-//		}
-//
-//		//get the customer from the db with id
-//		Customer customer=customerRepository2.findById(customerId).get();
-//
-//		//make tripBooking
-//		TripBooking tripBooking=new TripBooking(fromLocation,toLocation,distanceInKm,TripStatus.CONFIRMED,driver,customer);
-//
-//		//change the driver cab is not available
-//		driver.getCab().setAvailable(Boolean.FALSE);
-//
-//		//save all these into dbs
-//		tripBooking=tripBookingRepository2.save(tripBooking);
-//		driver=driverRepository2.save(driver);
-//		customer=customerRepository2.save(customer);
-//
-//		return tripBooking;
+		//1. get all drivers
+		List<Driver>driverList=driverRepository2.getAllDriverList();
 
-		List<Driver> driverList = driverRepository2.getAllDriverList();
+		//2. find the lowest driverId who is free
+		//so sort the driverList in ascending order based on their ids
+		Collections.sort(driverList,(Driver a,Driver b)->{
+			return Integer.compare(a.getDriverId(), b.getDriverId());
+		});
 
-		// Find the first available driver
-		Optional<Driver> availableDriver = driverList.stream()
-				.filter(driver -> driver.getCab().getAvailable())
-				.findFirst();
+		//now check if any driver cab is free or not
+		boolean flag=true;
 
-		// If no available driver found, throw exception
-		if (availableDriver.isEmpty()) {
+		Driver driver=null;
+
+		for(Driver driver1:driverList)
+		{
+			if(driver1.getCab().getAvailable()==Boolean.TRUE)
+			{
+				driver=driver1;
+				flag=false;
+				break;
+			}
+		}
+
+		//if flag is true then no driver cab is available
+		if(flag)
+		{
 			throw new Exception("No cab available!");
 		}
 
-		Driver driver = availableDriver.get();
+		//get the customer from the db with id
+		Customer customer=customerRepository2.findById(customerId).get();
 
-		// Get the customer from the database
-		Customer customer = customerRepository2.findById(customerId).orElseThrow(() -> new Exception("Customer not found"));
+		//make tripBooking
+		TripBooking tripBooking=new TripBooking(fromLocation,toLocation,distanceInKm,TripStatus.CONFIRMED,driver,customer);
 
-		// Create trip booking
-		TripBooking tripBooking = new TripBooking(fromLocation, toLocation, distanceInKm, TripStatus.CONFIRMED, driver, customer);
-
-		// Update driver's cab availability
+		//change the driver cab is not available
 		driver.getCab().setAvailable(Boolean.FALSE);
 
-		// Save trip booking and driver details
-		tripBooking = tripBookingRepository2.save(tripBooking);
-		driver = driverRepository2.save(driver);
+		//save all these into dbs
+		tripBooking=tripBookingRepository2.save(tripBooking);
+		driver=driverRepository2.save(driver);
+		customer=customerRepository2.save(customer);
 
 		return tripBooking;
 	}
@@ -154,24 +125,52 @@ public class CustomerServiceImpl implements CustomerService {
 	public void completeTrip(Integer tripId)
 	{
 		//Complete the trip having given trip Id and update TripBooking attributes accordingly
-		TripBooking tripBooking=tripBookingRepository2.findById(tripId).get();
-		tripBooking.setFromLocation(null);
-		tripBooking.setToLocation(null);
-		tripBooking.setDistanceInKm(null);
-		tripBooking.setStatus(TripStatus.COMPLETED);
+//		TripBooking tripBooking=tripBookingRepository2.findById(tripId).get();
+//		tripBooking.setFromLocation(null);
+//		tripBooking.setToLocation(null);
+//		tripBooking.setDistanceInKm(null);
+//		tripBooking.setStatus(TripStatus.COMPLETED);
+//
+//		Driver driver=tripBooking.getDriver();
+//		Cab cab=tripBooking.getDriver().getCab();
+//
+//		cab.setAvailable(Boolean.TRUE);
+//		cab.setPerKmRate(10);//default
+//
+//		tripBooking.setCustomer(null);
+//		tripBooking.setDriver(null);
+//
+//
+//		cab=cabRepository.save(cab);
+//		driver=driverRepository2.save(driver);
+//		tripBooking=tripBookingRepository2.save(tripBooking);
 
-		Driver driver=tripBooking.getDriver();
-		Cab cab=tripBooking.getDriver().getCab();
+		Optional<TripBooking> optionalTripBooking = tripBookingRepository2.findById(tripId);
+		if (optionalTripBooking.isPresent()) {
+			TripBooking tripBooking = optionalTripBooking.get();
+			tripBooking.setFromLocation(null);
+			tripBooking.setToLocation(null);
+			tripBooking.setDistanceInKm(null);
+			tripBooking.setStatus(TripStatus.COMPLETED);
 
-		cab.setAvailable(Boolean.TRUE);
-		cab.setPerKmRate(10);//default
-
-		tripBooking.setCustomer(null);
-		tripBooking.setDriver(null);
-
-
-		cab=cabRepository.save(cab);
-		driver=driverRepository2.save(driver);
-		tripBooking=tripBookingRepository2.save(tripBooking);
+			Driver driver = tripBooking.getDriver();
+			if (driver != null) {
+				Cab cab = driver.getCab();
+				if (cab != null) {
+					cab.setAvailable(Boolean.TRUE);
+					cab.setPerKmRate(10); //default
+					cab = cabRepository.save(cab);
+				}
+				driver = driverRepository2.save(driver);
+			}
+			tripBooking.setCustomer(null);
+			tripBooking.setDriver(null);
+			tripBooking = tripBookingRepository2.save(tripBooking);
+		} else {
+			// Handle the case where the trip with the given ID is not found
+			// You can log an error, throw an exception, or handle it according to your application's requirements
+			System.out.println("Trip with ID " + tripId + " not found.");
+		}
 	}
+
 }
