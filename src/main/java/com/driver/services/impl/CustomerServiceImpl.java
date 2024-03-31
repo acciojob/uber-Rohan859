@@ -67,9 +67,9 @@ public class CustomerServiceImpl implements CustomerService {
 		//2. find the lowest driverId who is free
 		//so sort the driverList in ascending order based on their ids
 
-//		Collections.sort(driverList,(Driver a,Driver b)->{
-//			return Integer.compare(a.getDriverId(), b.getDriverId());
-//		});
+		Collections.sort(driverList,(Driver a,Driver b)->{
+			return Integer.compare(a.getDriverId(), b.getDriverId());
+		});
 //
 //		System.out.println("sorted list is -> "+driverList.toString());
 
@@ -80,21 +80,21 @@ public class CustomerServiceImpl implements CustomerService {
 
 		for(Driver driver1:driverList)
 		{
-//			if(driver1!=null && driver1.getCab()!=null && driver1.getCab().getAvailable()==Boolean.TRUE)
-//			{
-//				driver=driver1;
-//				flag=false;
-//				break;
-//			}
-
 			if(driver1.getCab()!=null && driver1.getCab().getAvailable()==Boolean.TRUE)
 			{
-				if(driver==null || driver1.getDriverId()<driver.getDriverId())
-				{
-					driver=driver1;
-					flag=false;
-				}
+				driver=driver1;
+				flag=false;
+				break;
 			}
+
+//			if(driver1.getCab()!=null && driver1.getCab().getAvailable()==Boolean.TRUE)
+//			{
+//				if(driver==null || driver1.getDriverId()<driver.getDriverId())
+//				{
+//					driver=driver1;
+//					flag=false;
+//				}
+//			}
 		}
 
 		//if flag is true then no driver cab is available
