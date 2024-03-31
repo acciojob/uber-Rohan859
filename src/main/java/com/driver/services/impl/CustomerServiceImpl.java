@@ -157,7 +157,7 @@ public class CustomerServiceImpl implements CustomerService {
 		Driver driver=tripBooking.getDriver();
 		Cab cab=driver.getCab();
 
-		cab.setPerKmRate(10);
+		//cab.setPerKmRate(10);
 		cab.setAvailable(Boolean.TRUE);
 
 		//set attributes in bookTrip
@@ -191,7 +191,7 @@ public class CustomerServiceImpl implements CustomerService {
 		Driver driver=tripBooking.getDriver();
 		Cab cab=driver.getCab();
 
-		cab.setPerKmRate(10);
+		//cab.setPerKmRate(10);
 		cab.setAvailable(Boolean.TRUE);
 
 		//set attributes in bookTrip
