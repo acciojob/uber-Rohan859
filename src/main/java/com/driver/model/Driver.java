@@ -1,6 +1,8 @@
 package com.driver.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "drivers")
@@ -14,9 +16,11 @@ public class Driver
     private String password;
 
 
-    @OneToOne
-    @JoinColumn
+    @OneToOne(mappedBy ="driver",cascade = CascadeType.ALL)
     private Cab cab;
+
+    @OneToMany(mappedBy = "driver",cascade = CascadeType.ALL)
+    private List<TripBooking> tripBookingList=new ArrayList<>();
 
     public Driver(String mobile, String password) {
         this.mobile = mobile;
@@ -56,5 +60,13 @@ public class Driver
 
     public void setCab(Cab cab) {
         this.cab = cab;
+    }
+
+    public List<TripBooking> getTripBookingList() {
+        return tripBookingList;
+    }
+
+    public void setTripBookingList(List<TripBooking> tripBookingList) {
+        this.tripBookingList = tripBookingList;
     }
 }

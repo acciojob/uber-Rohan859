@@ -62,6 +62,8 @@ public class CustomerServiceImpl implements CustomerService {
 			return Integer.compare(a.getDriverId(), b.getDriverId());
 		});
 
+		System.out.println("sorted list is -> "+driverList);
+
 		//now check if any driver cab is free or not
 		boolean flag=true;
 

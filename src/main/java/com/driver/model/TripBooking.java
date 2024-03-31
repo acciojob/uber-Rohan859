@@ -13,14 +13,18 @@ public class TripBooking
     private String toLocation;
     private Integer distanceInKm;
 
+    @Enumerated(value = EnumType.STRING)
     private TripStatus tripStatus;
 
     private Integer bill;
+
+    @JoinColumn
     @OneToOne
     Driver driver;
 
+    @JoinColumn
     @ManyToOne
-    Customer customer;
+    private Customer customer;
 
     public TripBooking() {
     }
@@ -97,4 +101,6 @@ public class TripBooking
     public void setBill(Integer bill) {
         this.bill = bill;
     }
+
+
 }

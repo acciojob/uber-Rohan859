@@ -12,7 +12,8 @@ public class Cab
     private Boolean cabUnavlbl;
     private Integer perKmRate;
 
-    @OneToOne(mappedBy = "cab",cascade = CascadeType.ALL)
+    @JoinColumn
+    @OneToOne
     Driver driver;
 
 
@@ -55,4 +56,6 @@ public class Cab
     public void setDriver(Driver driver) {
         this.driver = driver;
     }
+
+
 }
