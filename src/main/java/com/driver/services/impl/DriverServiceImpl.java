@@ -52,7 +52,7 @@ public class DriverServiceImpl implements DriverService {
 		Driver driver=driverRepository3.findById(driverId).get();
 
 		//2. set cab is null
-		driver.setCab(null);
+		//driver.setCab(null);
 
 		//3. delete the driver from DB
 		//driverRepository3.deleteTheDriverFromDbByDriverId(driverId);
