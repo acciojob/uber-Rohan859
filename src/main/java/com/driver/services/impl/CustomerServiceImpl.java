@@ -170,8 +170,8 @@ public class CustomerServiceImpl implements CustomerService {
 		cab.setAvailable(Boolean.TRUE);
 
 		//set attributes in bookTrip
-		tripBooking.setCustomer(null);
-		tripBooking.setDriver(null);
+//		tripBooking.setCustomer(null);
+//		tripBooking.setDriver(null);
 		tripBooking.setStatus(TripStatus.CANCELED);
 
 		tripBooking.setBill(0);
@@ -207,8 +207,8 @@ public class CustomerServiceImpl implements CustomerService {
 		cab.setAvailable(Boolean.TRUE);
 
 		//set attributes in bookTrip
-		tripBooking.setCustomer(null);
-		tripBooking.setDriver(null);
+//		tripBooking.setCustomer(null);
+//		tripBooking.setDriver(null);
 		tripBooking.setStatus(TripStatus.COMPLETED);
 		tripBooking.setBill(0);
 
