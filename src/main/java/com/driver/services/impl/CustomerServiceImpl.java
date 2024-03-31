@@ -43,6 +43,7 @@ public class CustomerServiceImpl implements CustomerService {
 		//customerRepository2.deleteFromRepoByIdFromCustomers(customerId);
 		//customerRepository2.deleteById(customerId);
 		Customer customer=customerRepository2.findById(customerId).get();
+		customer.getTripBookingList().clear();
 		customerRepository2.delete(customer);
 	}
 
