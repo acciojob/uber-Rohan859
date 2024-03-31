@@ -40,7 +40,8 @@ public class CustomerServiceImpl implements CustomerService {
 	public void deleteCustomer(Integer customerId)
 	{
 		// Delete customer without using deleteById function
-		customerRepository2.deleteFromRepoByIdFromCustomers(customerId);
+		//customerRepository2.deleteFromRepoByIdFromCustomers(customerId);
+		customerRepository2.deleteById(customerId);
 	}
 
 	@Override
@@ -50,10 +51,11 @@ public class CustomerServiceImpl implements CustomerService {
 		//Avoid using SQL query
 
 		//1. get all drivers
-		List<Driver>driverList=driverRepository2.getAllDriverList();
+		List<Driver>driverList=driverRepository2.findAll();
 
 		//2. find the lowest driverId who is free
 		//so sort the driverList in ascending order based on their ids
+
 		Collections.sort(driverList,(Driver a,Driver b)->{
 			return Integer.compare(a.getDriverId(), b.getDriverId());
 		});

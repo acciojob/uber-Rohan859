@@ -11,10 +11,10 @@ import java.util.List;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Integer>
 {
-    @Query(nativeQuery = true,value = "delete from customers where customers_id = :id")
-    public void deleteFromRepoByIdFromCustomers(Integer id);
-
-
-    @Query(nativeQuery = true,value = "select * from customers")
-    public List<Customer>getAllCustomerList();
+//    @Query(nativeQuery = true,value = "delete from customers where customers_id = :id")
+//    public void deleteFromRepoByIdFromCustomers(Integer id);
+//
+//
+//    @Query(nativeQuery = true,value = "select * from customers")
+//    public List<Customer>getAllCustomerList();
 }

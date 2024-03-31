@@ -50,7 +50,8 @@ public class DriverServiceImpl implements DriverService {
 		driver.setCab(null);
 
 		//3. delete the driver from DB
-		driverRepository3.deleteTheDriverFromDbByDriverId(driverId);
+		//driverRepository3.deleteTheDriverFromDbByDriverId(driverId);
+		driverRepository3.deleteById(driverId);
 	}
 
 	@Override

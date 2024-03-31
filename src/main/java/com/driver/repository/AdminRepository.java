@@ -8,6 +8,6 @@ import com.driver.model.Admin;
 @Repository
 public interface AdminRepository extends JpaRepository<Admin, Integer>
 {
-    @Query(nativeQuery = true,value = "delete from admin where admin_id = :id")
-    public void deleteFromRepoById(Integer id);
+//    @Query(nativeQuery = true,value = "delete from admin where admin_id = :id")
+//    public void deleteFromRepoById(Integer id);
 }
