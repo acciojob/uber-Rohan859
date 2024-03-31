@@ -35,11 +35,11 @@ public class DriverServiceImpl implements DriverService {
 
 		//3. set deiver's cab is cab
 		driver.setCab(cab);
-		cab.setDriver(driver);
+		//cab.setDriver(driver);
 
 		//4. save into db driver and cab
 		driverRepository3.save(driver);
-		cabRepository3.save(cab);
+	//	cabRepository3.save(cab);
 
 	}
 
@@ -52,7 +52,7 @@ public class DriverServiceImpl implements DriverService {
 		Driver driver=driverRepository3.findById(driverId).get();
 
 		//2. set cab is null
-		//driver.setCab(null);
+		driver.setCab(null);
 
 		//3. delete the driver from DB
 		//driverRepository3.deleteTheDriverFromDbByDriverId(driverId);
