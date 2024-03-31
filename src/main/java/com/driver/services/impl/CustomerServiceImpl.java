@@ -143,7 +143,10 @@ public class CustomerServiceImpl implements CustomerService {
 		//Cancel the trip having given trip Id and update TripBooking attributes accordingly
 		TripBooking tripBooking=tripBookingRepository2.findById(tripId).get();
 
-
+		if(tripBooking==null || tripBooking.getCustomer()==null || tripBooking.getDriver()==null)
+		{
+			return;
+		}
 
 		//get driver and customer tripBookingList
 		List<TripBooking>tripBookingListFromDriver=tripBooking.getDriver().getTripBookingList();
@@ -177,7 +180,10 @@ public class CustomerServiceImpl implements CustomerService {
 		//Complete the trip having given trip Id and update TripBooking attributes accordingly
 		TripBooking tripBooking=tripBookingRepository2.findById(tripId).get();
 
-
+		if(tripBooking==null || tripBooking.getCustomer()==null || tripBooking.getDriver()==null)
+		{
+			return;
+		}
 
 		//get driver and customer tripBookingList
 		List<TripBooking>tripBookingListFromDriver=tripBooking.getDriver().getTripBookingList();
