@@ -15,6 +15,7 @@ public class Driver
 
 
     @OneToOne
+    @JoinColumn
     private Cab cab;
 
     public Driver(String mobile, String password) {
