@@ -213,7 +213,7 @@ public class CustomerServiceImpl implements CustomerService {
 //		tripBooking.setCustomer(null);
 //		tripBooking.setDriver(null);
 		tripBooking.setStatus(TripStatus.COMPLETED);
-		tripBooking.setBill(0);
+	//	tripBooking.setBill(0);
 
 
 		tripBookingRepository2.save(tripBooking);
